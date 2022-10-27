@@ -54,7 +54,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This script is used to check the password age of a user. If the password is older than 180 days, the script will send an email to the administrator
+This script is used to check the password age of a user. If the password is older than 180 days, it will alert the administrator on Centreon.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -81,8 +81,8 @@ You can run it by following these steps.
     ```sh
     git clone https://github.com/Isnubi/Check-PasswordAge.git
     cd Check-PasswordAge
-    chmod +x main.sh
-    ./main.sh
+    chmod +x Centreon-Alert-PasswordAge.sh
+    ./Centreon-Alert-PasswordAge.sh
     ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
