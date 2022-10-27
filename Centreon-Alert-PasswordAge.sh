@@ -4,7 +4,7 @@
 # NAME: Centreon-Alert-PasswordAge.sh
 # AUTHOR: GAMBART Louis
 # DATE: 27/10/2022
-# VERSION 1.1
+# VERSION 1.2
 #
 # =======================================================
 #
@@ -12,6 +12,7 @@
 #
 # 1.0: Initial version
 # 1.1: Use another bin to secure the script
+# 1.2: Add language control for french based system
 #
 # =======================================================
 
@@ -32,7 +33,12 @@ fi
 
 
 # get the password age and calculate the delta with the current date
-out=$(chage -l "$username" | grep "Last password change" | awk '{print $5, $6, $7}' | xargs -I {} date -d "{}" +%Y-%m-%d)
+language=$(locale | grep LANG= | cut -d= -f2 | cut -d_ -f1)
+if [ "$language" = "fr" ]; then
+  out=$(chage -l "$username" | grep "Dernier changement de mot de passe" | awk '{print $5, $6, $7}' | xargs -I {} date -d "{}" +%Y-%m-%d)
+else
+  out=$(chage -l "$username" | grep "Last password change" | awk '{print $5, $6, $7}' | xargs -I {} date -d "{}" +%Y-%m-%d)
+fi
 now=$(date +%Y-%m-%d)
 delta=$(( ($(date -d "$now" +%s) - $(date -d "$out" +%s) )/(60*60*24) ))
 
