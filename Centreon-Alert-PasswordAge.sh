@@ -53,7 +53,7 @@ else
 fi
 
 
-# Path: main.sh
+# Path: Centreon-Alert-PasswordAge.sh
 
 # 0 = OK
 # 1 = WARNING
