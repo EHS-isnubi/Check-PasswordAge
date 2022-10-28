@@ -3,8 +3,8 @@
 #
 # NAME: Centreon-Alert-PasswordAge.sh
 # AUTHOR: GAMBART Louis
-# DATE: 27/10/2022
-# VERSION 1.2
+# DATE: 28/10/2022
+# VERSION 1.4
 #
 # =======================================================
 #
@@ -13,12 +13,13 @@
 # 1.0: Initial version
 # 1.1: Use another bin to secure the script
 # 1.2: Add language control for french based system
-# 1.3: Remove language control and force chage execution in english
+# 1.3: Remove language control and force chage command execution in english
+# 1.4: Add critical exit code for password older than one year
 #
 # =======================================================
 
 
-# if username is not set, set it to root (default)
+# if username is not set, set it to root by default
 if [ -z "$1" ]; then
     username="root"
 else
@@ -41,10 +42,13 @@ delta=$(( ($(date -d "$now" +%s) - $(date -d "$out" +%s) )/(60*60*24) ))
 
 # if the delta is greater than 180 days, send a warning alert
 if [ "$delta" -gt 180 ]; then
-    echo "User $username has a password that is older than 180 days"
-        exit 1
+    echo "WARNING: User $username has a password that is older than 180 days"
+    exit 1
+elif [ "$delta" -gt 365 ]; then
+    echo "CRITICAL: User $username has a password that is older than 365 days"
+    exit 2
 else
-    echo "User $username has a password that is not older than 180 days"
+    echo "OK: User $username has a password that is not older than 180 days"
     exit 0
 fi
 
