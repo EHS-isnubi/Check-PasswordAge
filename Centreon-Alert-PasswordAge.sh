@@ -21,13 +21,15 @@
 # =======================================================
 
 
+# ====================== COLOR CODE =====================
+
 No_Color='\033[0m'
 Red='\033[0;31m'
 Yellow='\033[0;33m'
 Green='\033[0;32m'
 
 
-# if username is not set, set it to root by default
+# If any user is specified in the command line, set it as root user
 if [ -z "$1" ]; then
     username="root"
 else
@@ -35,35 +37,37 @@ else
 fi
 
 
-# if the username don't exist, exit
+# If the user provided don't exist, exit the script
 if ! id "$username" >/dev/null 2>&1; then
     echo "User $username does not exist"
     exit
 fi
 
 
-# get the password age and calculate the delta with the current date
+# Get the delta, in days, between the current date and the last password change date
 out=$(LANG='' chage -l "$username" | grep "Last password change" | awk '{print $5, $6, $7}' | xargs -I {} date -d "{}" +%Y-%m-%d)
 now=$(date +%Y-%m-%d)
 delta=$(( ($(date -d "$now" +%s) - $(date -d "$out" +%s) )/(60*60*24) ))
 
 
-# if the delta is greater than 180 days, send a warning alert
+# If the delta is greater than 365, exit the script with critical code
 if [ "$delta" -gt 365 ]; then
     echo -e "${Red}CRITICAL${No_Color}: User $username has a password that is older than 365 days"
     echo "Last password change: $out"
     exit 2
+# If the delta is greater than 180 days, exit the script with warning code
 elif [ "$delta" -gt 180 ]; then
     echo -e "${Yellow}WARNING${No_Color}: User $username has a password that is older than 180 days"
     echo "Last password change: $out"
     exit 1
+# Else, exit the script with ok code
 else
     echo -e "${Green}OK${No_Color}: User $username has a password that is not older than 180 days"
     exit 0
 fi
 
 
-# Path: Centreon-Alert-PasswordAge.sh
+# ======================= CENTREON ======================
 
 # 0 = OK
 # 1 = WARNING
