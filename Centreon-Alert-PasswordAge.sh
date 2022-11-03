@@ -42,10 +42,11 @@ Green='\033[0;32m '     # Green
 #                   #
 #####################
 
-if [ "$EUID" -ne 0 ]
-  then echo -e "${Red}Please run as root${No_Color}"
+if [ "$(id -u)" -ne 0 ]; then
+  echo -e "${Red}Please run as root${No_Color}"
   exit
 fi
+
 
 ######################
 #                    #
