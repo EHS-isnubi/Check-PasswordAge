@@ -82,7 +82,7 @@ You can run it by following these steps.
     git clone https://github.com/Isnubi/Check-PasswordAge.git
     cd Check-PasswordAge
     chmod +x Centreon-Alert-PasswordAge.sh
-    ./Centreon-Alert-PasswordAge.sh
+    sudo ./Centreon-Alert-PasswordAge.sh <username>
     ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
