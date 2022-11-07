@@ -87,10 +87,6 @@ You can run it by following these steps.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- ROADMAP -->
 ## Roadmap
 See the [open issues](https://github.com/Isnubi/Check-PasswordAge/issues) for a full list of proposed features (and known issues).
